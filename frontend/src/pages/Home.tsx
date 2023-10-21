@@ -1,4 +1,4 @@
-import { CircularProgress, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -6,6 +6,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import InfoIcon from "@mui/icons-material/Info";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 import { useEffect, useState } from "react";
 import axios, { AxiosError } from "axios";
@@ -56,12 +60,34 @@ const Home = () => {
         <TableContainer component={Paper}>
           <Table>
             <TableHead>
-              <TableRow>
-                <TableCell>No.</TableCell>
-                <TableCell align="right">Title</TableCell>
-                <TableCell align="right">Author</TableCell>
-                <TableCell align="right">Publish Year</TableCell>
-                <TableCell align="right">Operations</TableCell>
+              <TableRow sx={{ backgroundColor: "#000" }}>
+                <TableCell sx={{ color: "#fff", fontWeight: 700 }}>
+                  Book ID.
+                </TableCell>
+                <TableCell
+                  sx={{ color: "#fff", fontWeight: 700 }}
+                  align="right"
+                >
+                  Title
+                </TableCell>
+                <TableCell
+                  sx={{ color: "#fff", fontWeight: 700 }}
+                  align="right"
+                >
+                  Author
+                </TableCell>
+                <TableCell
+                  sx={{ color: "#fff", fontWeight: 700 }}
+                  align="right"
+                >
+                  Publish Year
+                </TableCell>
+                <TableCell
+                  sx={{ color: "#fff", fontWeight: 700 }}
+                  align="right"
+                >
+                  Operations
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -76,8 +102,19 @@ const Home = () => {
                   <TableCell align="right">{book.title}</TableCell>
                   <TableCell align="right">{book.author}</TableCell>
                   <TableCell align="right">{book.publishYear}</TableCell>
-                  <TableCell align="right">
-                    <Link to="/books/details/${}"></Link>
+                  <TableCell
+                    align="right"
+                    sx={{ display: "flex", gap: "0.8rem" }}
+                  >
+                    <Link to={`/books/delete/${book._id}`}>
+                      <DeleteIcon sx={{ color: "#000" }} />
+                    </Link>
+                    <Link to={`/books/edit/${book._id}`}>
+                      <EditIcon sx={{ color: "#000" }} />
+                    </Link>
+                    <Link to={`/books/details/${book._id}`}>
+                      <InfoIcon sx={{ color: "#000" }} />
+                    </Link>
                   </TableCell>
                 </TableRow>
               ))}
@@ -85,6 +122,25 @@ const Home = () => {
           </Table>
         </TableContainer>
       )}
+
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Link to="/books/create">
+          <Button
+            sx={{
+              backgroundColor: "#000",
+              marginTop: "2rem",
+              alignSelf: "right",
+              ":hover": {
+                backgroundColor: "#000",
+              },
+            }}
+            variant="contained"
+            endIcon={<AddCircleIcon />}
+          >
+            Add new book
+          </Button>
+        </Link>
+      </Box>
     </div>
   );
 };
