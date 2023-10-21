@@ -9,14 +9,8 @@ const PORT = process.env.PORT;
 const DB_URI = process.env.DB_URI;
 
 app.use(express.json());
+app.use(cors());
 app.use("/books", bookRoute);
-app.use(
-  cors({
-    origin: "http://localhost:9000",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: [],
-  })
-);
 
 mongoose
   .connect(DB_URI)
