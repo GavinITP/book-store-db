@@ -90,3 +90,19 @@ app.put("/books/:id", async (req, res) => {
     res.status(500).json({ message: e.message });
   }
 });
+
+app.delete("/books/:id", async (req, res) => {
+  try {
+    const id = req.body.id;
+    const book = await Book.deleteOne(id);
+
+    if (!book) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+
+    return res.status(200).json(book);
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ message: e.message });
+  }
+});
