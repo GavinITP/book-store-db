@@ -20,7 +20,7 @@ mongoose
   })
   .catch((e) => {
     console.log("Error:", e);
-    res.status(500).send({ message: e.message });
+    res.status(500).json({ message: e.message });
   });
 
 // get all books
@@ -31,7 +31,7 @@ app.get("/books", async (req, res) => {
     return res.status(200).json({ count: books.length, data: books });
   } catch (e) {
     console.log(e.message);
-    res.status(500).send({ message: e.message });
+    res.status(500).json({ message: e.message });
   }
 });
 
@@ -44,7 +44,7 @@ app.get("/books/:id", async (req, res) => {
     return res.status(200).json(book);
   } catch (e) {
     console.log(e.message);
-    res.status(500).send({ message: e.message });
+    res.status(500).json({ message: e.message });
   }
 });
 
@@ -56,12 +56,37 @@ app.post("/books", async (req, res) => {
     if (!title || !author || !publishYear) {
       return res
         .status(400)
-        .send({ message: "Please send all required fields" });
+        .json({ message: "Please send all required fields" });
     }
     const book = await Book.create(req.body);
     return res.status(201).send(book);
   } catch (e) {
     console.log(e.message);
-    res.status(500).send({ message: e.message });
+    res.status(500).json({ message: e.message });
+  }
+});
+
+// update a book by id
+
+app.put("/books/:id", async (req, res) => {
+  try {
+    const { title, author, publishYear } = req.body;
+    if (!title || !author || !publishYear) {
+      return res
+        .status(400)
+        .json({ message: "Please send all required fields" });
+    }
+
+    const id = req.params.id;
+    const result = await Book.findByIdAndUpdate(id, req.body);
+
+    if (!result) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+
+    return res.status(200).json(result);
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ message: e.message });
   }
 });
