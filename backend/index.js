@@ -34,3 +34,21 @@ app.get("/books", async (req, res) => {
     res.status(500).send({ message: e.message });
   }
 });
+
+// add a book
+
+app.post("/books", async (req, res) => {
+  try {
+    const { title, author, publishYear } = req.body;
+    if (!title || !author || !publishYear) {
+      return res
+        .status(400)
+        .send({ message: "Please send all required fields" });
+    }
+    const book = await Book.create(req.body);
+    return res.status(201).send(book);
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).send({ message: e.message });
+  }
+});
