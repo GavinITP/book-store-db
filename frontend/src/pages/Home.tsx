@@ -15,11 +15,13 @@ import { useEffect, useState } from "react";
 import axios, { AxiosError } from "axios";
 import { Link } from "react-router-dom";
 
-interface Book {
+export interface Book {
   _id: string;
   title: string;
   author: string;
   publishYear: number;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 const Home = () => {
