@@ -35,6 +35,19 @@ app.get("/books", async (req, res) => {
   }
 });
 
+// get a book by id
+
+app.get("/books/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const book = await Book.findById(id);
+    return res.status(200).json(book);
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).send({ message: e.message });
+  }
+});
+
 // add a book
 
 app.post("/books", async (req, res) => {
