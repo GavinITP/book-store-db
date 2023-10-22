@@ -71,12 +71,12 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// delete a book by
+// delete a book by id
 
 router.delete("/:id", async (req, res) => {
   try {
-    const id = req.body.id;
-    const book = await Book.deleteOne(id);
+    const id = req.params.id;
+    const book = await Book.findByIdAndDelete(id);
 
     if (!book) {
       return res.status(404).json({ message: "Book not found" });

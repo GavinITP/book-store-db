@@ -16,12 +16,12 @@ import axios, { AxiosError } from "axios";
 import { Link } from "react-router-dom";
 
 export interface Book {
-  _id: string;
+  _id?: string;
   title: string;
   author: string;
   publishYear: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const Home = () => {
@@ -53,7 +53,7 @@ const Home = () => {
         mt={4}
         mb={6}
       >
-        Book Store
+        Book Store Database
       </Typography>
 
       {isLoading ? (
